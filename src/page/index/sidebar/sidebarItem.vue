@@ -25,7 +25,7 @@
         </template>
         <template v-for="(child, cindex) in item[childrenKey]">
           <el-menu-item
-            :index="(child[pathKey], cindex)"
+            :index="(child[pathKey], cindex).toString()"
             @click="open(child)"
             v-if="validatenull(child[childrenKey])"
             :key="child[labelKey]"
