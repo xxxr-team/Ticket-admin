@@ -17,10 +17,18 @@
 
 import request from '@/router/axios'
 
-export function fetchList(query) {
+export function fetchList(data) {
   return request({
     url: 'movie/admin/order/page',
     method: 'post',
-    data: query
+    data
+  })
+}
+
+export function deleteList(data) {
+  return request({
+    url: `movie/admin/order/delete/${data.id}`,
+    method: 'delete',
+    data
   })
 }

@@ -55,7 +55,7 @@ export default {
     return {
       params: {
         pageNum: 1,
-        limit: 10,
+        pageSize: 10,
       },
       dataSourceList: [],
       tableData: [],
@@ -81,13 +81,13 @@ export default {
     // this.getdataSourceList();
   },
   methods: {
-    getList(page) {
-      //   this.tableLoading = true;
-      //   fetchList(this.params).then((response) => {
-      //     this.tableData = response.data.data.records;
-      //     this.page.total = response.data.data.total;
-      //     this.tableLoading = false;
-      //   });
+    getList() {
+      this.tableLoading = true;
+      fetchList(this.params).then((response) => {
+        this.tableData = response.data.data;
+        this.page.total = response.data.total;
+        this.tableLoading = false;
+      });
     },
     handleDown: function (row) {
       this.formData.tableName = row.tableName;
