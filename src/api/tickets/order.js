@@ -19,8 +19,8 @@ import request from '@/router/axios'
 
 export function fetchList(query) {
   return request({
-    url: '/admin/order/getOrders',
-    method: 'get',
-    params: query
+    url: 'movie/admin/order/page',
+    method: 'post',
+    data: query
   })
 }

@@ -24,6 +24,8 @@
         :data="tableData"
         :table-loading="tableLoading"
         :option="tableOption"
+        @search-change="searchChange"
+        @search-reset="resetChange"
         @on-load="getList"
         @size-change="sizeChange"
         @current-change="currentChange"
@@ -44,11 +46,7 @@
 
 <script>
 import { fetchList } from "@/api/tickets/order";
-import {
-  formBatchOption,
-  formOption,
-  tableOption,
-} from "@/const/crud/tickets/order";
+import { tableOption } from "@/const/crud/tickets/order";
 
 export default {
   name: "Order",
@@ -56,7 +54,7 @@ export default {
     return {
       params: {
         pageNum: 1,
-        limit: 10,
+        pageSize: 10,
       },
       dataSourceList: [],
       tableData: [],
@@ -64,6 +62,7 @@ export default {
       formBatchData: {},
       box: false,
       boxBatch: false,
+      searchform: {},
       page: {
         total: 0, // 总页数
         currentPage: 1, // 当前页数
@@ -76,21 +75,32 @@ export default {
       },
       tableLoading: false,
       tableOption: tableOption,
-      formOption: formOption,
-      formBatchOption: formBatchOption,
     };
   },
   created() {
     // this.getdataSourceList();
   },
   methods: {
-    getList(page) {
-      //   this.tableLoading = true;
-      //   fetchList(this.params).then((response) => {
-      //     this.tableData = response.data.data.records;
-      //     this.page.total = response.data.data.total;
-      //     this.tableLoading = false;
-      //   });
+    getList(params) {
+      this.tableLoading = true;
+      fetchList({
+        ...this.searchform,
+        ...this.params,
+      }).then((response) => {
+        this.tableData = response.data.data;
+        this.page.total = response.data.total;
+        this.tableLoading = false;
+      });
+    },
+    async searchChange(params, done) {
+      this.searchform = await params;
+      await this.getList();
+      done();
+      // this.getList({ ...params, ...this.params });
+    },
+    resetChange() {
+      this.searchform = {};
+      this.getList();
     },
     handleDown: function (row) {
       this.formData.tableName = row.tableName;
@@ -109,9 +119,6 @@ export default {
       fetchSelectDsList().then((response) => {
         this.dataSourceList = response.data.data;
       });
-    },
-    search() {
-      this.getList(this.page);
     },
     openBatch() {
       if (

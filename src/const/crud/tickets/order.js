@@ -63,7 +63,14 @@
     }, {
       label: '订单号',
       prop: 'orderId',
-      align: 'center'
+      align: 'center',
+      search: true,
+      editDisabled: true,
+      rules: [{
+        required: true,
+        message: '请输入订单号',
+        trigger: 'blur'
+      }]
     }, {
       label: '购买用户',
       prop: 'userNick',
@@ -77,96 +84,6 @@
         prop: 'price',
         align: 'center'
       }, ]
-  }
-  
-  export const formOption = {
-    submitBtn: false,
-    emptyBtn: false,
-    submitText: '生成',
-    column: [
-      {
-        label: '表名称',
-        prop: 'tableName',
-        disabled: true
-      }, {
-        label: '包名',
-        prop: 'packageName',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '作者',
-        prop: 'author',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '模块',
-        prop: 'moduleName',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '表前缀',
-        prop: 'tablePrefix',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '注释',
-        prop: 'comments',
-        placeholder: '可为空，加载表备注'
-      }, {
-        label: '前端风格',
-        prop: 'style',
-        type: 'radio',
-        border: true,
-        span: 24,
-        dicData: [{
-          label: '原生ELEMENT',
-          value: '1'
-        }, {
-          label: '数据驱动AVUE',
-          value: '0'
-        }]
-      }
-    ]
-  }
-  export const formBatchOption = {
-    submitText: '生成',
-    column: [
-      {
-        label: '表名称',
-        prop: 'tableName',
-        disabled: true,
-        minRows: 2,
-        type: 'textarea',
-        row: true,
-        span: 24
-      },
-      {
-        label: '包名',
-        prop: 'packageName',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '作者',
-        prop: 'author',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '模块',
-        prop: 'moduleName',
-        placeholder: '可为空，加载系统默认配置'
-      }, {
-        label: '注释',
-        prop: 'comments',
-        placeholder: '可为空，加载表备注'
-      }, {
-        label: '前端风格',
-        prop: 'style',
-        type: 'radio',
-        span: 24,
-        border: true,
-        dicData: [{
-          label: '原生ELEMENT',
-          value: '1'
-        }, {
-          label: '数据驱动AVUE',
-          value: '0'
-        }]
-      }
-    ]
   }
   
   export const tableDsOption = {
