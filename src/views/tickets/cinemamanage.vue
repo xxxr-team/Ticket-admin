@@ -25,6 +25,8 @@
         :table-loading="tableLoading"
         :option="tableOption"
         @on-load="getList"
+        @search-change="searchChange"
+        @search-reset="resetChange"
         @size-change="sizeChange"
         @current-change="currentChange"
         @refresh-change="refreshChange"
@@ -34,42 +36,34 @@
             type="primary"
             icon="el-icon-plus"
             size="small"
-            @click="addHall"
-            >添加影厅</el-button
-          >
-        </template>
-        <template slot-scope="scope" slot="itemType">
-          <el-button size="mini" type="info" @click="getSeat(scope.row)"
-            >座位</el-button
+            @click="addCinema"
+            >添加影院</el-button
           >
         </template>
         <template slot-scope="scope" slot="menu">
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >撤销</el-button
+          <el-button size="mini" type="primary" @click="editCinema(scope.row)"
+            >编辑</el-button
+          >
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
+            >删除</el-button
           >
         </template>
       </avue-crud>
     </basic-container>
-    <add-seat ref="addseat" @fetch-data="getList"></add-seat>
-    <add-hall ref="addhall" @fetch-data="getList"></add-hall>
+    <add-cinema ref="addcinema" @fetch-data="getList()"></add-cinema>
   </div>
 </template>
 
 <script>
-import { fetchList } from "@/api/tickets/hall";
+import { fetchCList, deleteList } from "@/api/tickets/cinemamanage";
 import { fetchItemList } from "@/api/admin/dict";
-import { tableOption } from "@/const/crud/tickets/hall";
-import addSeat from "./components/addSeat.vue";
+import { tableOption } from "@/const/crud/tickets/cinemamanage";
 import { mapGetters } from "vuex";
-import addHall from "./components/addHall.vue";
+import addCinema from "./components/addCinema.vue";
 export default {
-  name: "Moviehall",
+  name: "CinemaManage",
   components: {
-    addSeat,
-    addHall,
+    addCinema,
   },
   data() {
     return {
@@ -79,8 +73,7 @@ export default {
       },
       dataSourceList: [],
       tableData: [],
-      formData: {},
-      formBatchData: {},
+      searchform: {},
       box: false,
       boxBatch: false,
       page: {
@@ -88,55 +81,58 @@ export default {
         currentPage: 1, // 当前页数
         pageSize: 10, // 每页显示多少条
       },
-      // 预览参数
-      preview: {
-        open: false,
-        title: "代码预览",
-      },
       tableLoading: false,
       tableOption: tableOption,
     };
   },
   computed: {
     ...mapGetters({
-      hallOptions: "hallOptions",
+      brandOptions: "brandOptions",
     }),
   },
   created() {
     fetchItemList({
       current: 1,
       size: 100,
-      dictId: "1528233413214199809",
+      dictId: "1528242252764405761",
     }).then(async (res) => {
-      await this.$store.dispatch("Set_Hall_Options", res.data.data.records);
-      await this.$store.commit("Get_Hall_List", res.data.data.records);
+      await this.$store.dispatch("Set_Brand_Options", res.data.data.records);
+      await this.$store.commit("Get_Brand_List", res.data.data.records);
       this.tableLoading = false;
     });
   },
   methods: {
-    getList() {
+    async searchChange(params, done) {
+      this.searchform = await params;
+      await this.getList();
+      await done();
+      // this.getList({ ...params, ...this.params });
+    },
+    resetChange() {},
+    async getList() {
       this.tableLoading = true;
-      fetchList(this.params).then((response) => {
+      fetchCList({
+        ...this.params,
+        ...this.searchform,
+      }).then((response) => {
         this.tableData = response.data.data;
         this.page.total = response.data.total;
         this.tableLoading = false;
       });
     },
-    addHall() {
-      this.$refs.addhall.show();
+    addCinema() {
+      this.$refs.addcinema.show();
     },
-    handleDown: function (row) {
-      this.formData.tableName = row.tableName;
-      this.box = true;
-    },
-    getSeat(row) {
-      this.$refs.addseat.show(row);
+    editCinema(row) {
+      this.$refs.addcinema.show(row);
     },
     sizeChange(pageSize) {
       this.params.pageSize = pageSize;
+      this.getList();
     },
     currentChange(current) {
       this.params.pageNumber = current;
+      this.getList();
     },
     refreshChange() {
       this.getList(this.page);
@@ -149,20 +145,29 @@ export default {
     search() {
       this.getList(this.page);
     },
-    openBatch() {
-      if (
-        this.$refs.crud.tableSelect.length <= 1 ||
-        this.$refs.crud.tableSelect.length > 10
-      ) {
-        this.$message.error("选中表数量不合法，数量最少2个或最多为10个");
-        return false;
-      }
-      let tableName = [];
-      for (const table of this.$refs.crud.tableSelect) {
-        tableName.push(table.tableName);
-      }
-      this.formBatchData.tableName = tableName.join("-");
-      this.boxBatch = true;
+    handleDelete(row) {
+      this.$confirm("此操作将删除该影院, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          deleteList({ id: row.id }).then((res) => {
+            if (res.data.code == 200) {
+              this.getList();
+              this.$message({
+                type: "success",
+                message: "撤销成功!",
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
+        });
     },
   },
 };

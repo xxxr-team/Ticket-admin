@@ -21,7 +21,7 @@
  * @param {*} value
  * @param {*} callback
  */
-  
+ import store from '@/store'
   export const tableOption = {
     selection: true,
     border: true,
@@ -35,12 +35,19 @@
     column: [{
       label: '影厅ID',
       prop: 'id',
-      align: 'center'
+      align: 'center',
+      width: '100'
     }, {
+      label: '影院名',
+      prop: 'cinemaName',
+      align: 'center'
+      }, {
       label: '影厅名',
-      prop: 'hallType',
-      align: 'center'
-    }, {
+      align: 'center',
+        formatter:(val,value,label)=>{
+            return store.getters.hallOptions[val.hallType]
+        }
+      },{
       label: '影厅座位',
       prop: 'itemType',
       slot: true,

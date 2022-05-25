@@ -24,3 +24,38 @@ export function fetchList(data) {
     data
   })
 }
+
+//获取座位
+export function getSeats(params) {
+  return request({
+    url: `movie/admin/hall/getSeatByHallId/${params.hallId}`,
+    method: 'get',
+    params
+  })
+}
+
+//提交座位
+export function commitSeats(data) {
+  return request({
+    url: `movie/admin/hall/commitSeat`,
+    method: 'post',
+    data
+  })
+}
+
+//添加影厅
+export function addHall(data) {
+  return request({
+    url: `movie/admin/hall/addHall`,
+    method: 'post',
+    data
+  })
+}
+//编辑影厅
+export function editHall(data) {
+  return request({
+    url: `movie/admin/hall/updateHall`,
+    method: 'post',
+    data
+  })
+}

@@ -18,6 +18,10 @@ const getters = {
   roles: state => state.user.roles,
   permissions: state => state.user.permissions,
   menu: state => state.user.menu,
-  menuAll: state => state.user.menuAll
+  menuAll: state => state.user.menuAll,
+  brandOptions: state => state.tickets.brandOptions,
+  brandList: state => state.tickets.brandList,
+  hallOptions: state => state.tickets.hallOptions,
+  hallList: state => state.tickets.hallList
 }
 export default getters
