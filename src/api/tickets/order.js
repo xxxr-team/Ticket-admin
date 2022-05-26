@@ -32,3 +32,11 @@ export function deleteList(data) {
     data
   })
 }
+
+export function downBill(params) {
+  return request({
+    url: `movie/admin/wx/pay/downTradeBill`,
+    method: 'get',
+    params
+  })
+}

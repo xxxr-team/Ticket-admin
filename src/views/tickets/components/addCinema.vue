@@ -100,7 +100,6 @@ export default {
         latitude: null,
         longitude: null,
         supportRefund: null,
-        supportRebook: false,
       },
       rules: {
         cinemaName: [
@@ -155,9 +154,9 @@ export default {
                 this.$message.error(res.data.msg);
               }
               this.loading = false;
-      this.$refs["form"].resetFields();
-      this.form = this.$options.data().form;
-      this.dialogFormVisible = false;
+              this.$refs["form"].resetFields();
+              this.form = this.$options.data().form;
+              this.dialogFormVisible = false;
             });
           } else {
             addCinemaList(this.form).then((res) => {
@@ -168,9 +167,9 @@ export default {
                 this.$message.error(res.data.msg);
               }
               this.loading = false;
-      this.$refs["form"].resetFields();
-      this.form = this.$options.data().form;
-      this.dialogFormVisible = false;
+              this.$refs["form"].resetFields();
+              this.form = this.$options.data().form;
+              this.dialogFormVisible = false;
             });
           }
         } else {

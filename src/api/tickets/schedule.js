@@ -17,10 +17,10 @@
 
 import request from '@/router/axios'
 
-export function fetchList(query) {
+export function fetchSList(data) {
   return request({
-    url: '/admin/order/getOrders',
-    method: 'get',
-    params: query
+    url: 'movie/admin/schedule/getMovieSchedule',
+    method: 'post',
+    data
   })
 }

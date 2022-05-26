@@ -30,7 +30,11 @@
         @size-change="sizeChange"
         @current-change="currentChange"
         @refresh-change="refreshChange"
-      >
+        ><template slot-scope="scope" slot="menuLeft">
+          <el-button type="primary" size="small" @click="downBill"
+            >下载账单</el-button
+          >
+        </template>
         <template slot-scope="scope" slot="menu">
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
             >撤销</el-button
@@ -38,15 +42,20 @@
         </template>
       </avue-crud>
     </basic-container>
+    <down-bill ref="downbill"></down-bill>
   </div>
 </template>
 
 <script>
 import { fetchList, deleteList } from "@/api/tickets/order";
 import { tableOption } from "@/const/crud/tickets/order";
+import downBill from "./components/downBill.vue";
 
 export default {
   name: "Order",
+  components: {
+    downBill,
+  },
   data() {
     return {
       params: {
@@ -95,6 +104,9 @@ export default {
       await done();
       // this.getList({ ...params, ...this.params });
     },
+    downBill() {
+      this.$refs.downbill.show();
+    },
     handleDelete(row) {
       this.$confirm("此操作将撤销该订单, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -135,26 +147,6 @@ export default {
     },
     refreshChange() {
       this.getList(this.page);
-    },
-    getdataSourceList() {
-      fetchSelectDsList().then((response) => {
-        this.dataSourceList = response.data.data;
-      });
-    },
-    openBatch() {
-      if (
-        this.$refs.crud.tableSelect.length <= 1 ||
-        this.$refs.crud.tableSelect.length > 10
-      ) {
-        this.$message.error("选中表数量不合法，数量最少2个或最多为10个");
-        return false;
-      }
-      let tableName = [];
-      for (const table of this.$refs.crud.tableSelect) {
-        tableName.push(table.tableName);
-      }
-      this.formBatchData.tableName = tableName.join("-");
-      this.boxBatch = true;
     },
   },
 };

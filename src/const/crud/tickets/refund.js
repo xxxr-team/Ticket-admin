@@ -22,43 +22,44 @@
  * @param {*} callback
  */
 
-export const tableOption = {
-  selection: true,
-  border: true,
-  stripe: true,
-  menuAlign: 'center',
-  align: 'center',
-  addBtn: false,
-  editBtn: false,
-  delBtn: false,
-  searchMenuSpan: 6,
-  column: [{
-    label: '排片 ID',
-    prop: 'id',
-    align: 'center'
-  }, {
-    label: '电影名',
-    prop: 'movieName',
-    align: 'center'
-  }, {
-    label: '影院名',
-    prop: 'cinemaName',
-    align: 'center'
-  }, {
-    label: '放映大厅',
-    prop: 'hallName',
-    align: 'center'
-  }, {
-    label: '放映日期',
-    prop: 'day',
-    align: 'center'
-  }, {
-    label: '放映时间',
-    prop: 'time',
-    align: 'center'
-  }, {
-    label: '售价（元）',
-    prop: 'price',
-    align: 'center'
-  }, ]
-}
+ export const tableOption = {
+    selection: true,
+    border: true,
+    stripe: true,
+    menuAlign: 'center',
+    align: 'center',
+    addBtn: false,
+    editBtn: false,
+    delBtn: false,
+    searchMenuSpan: 6,
+    column: [{
+      label: '影院名',
+      prop: 'cinemaName',
+      align: 'center'
+    }, {
+      label: '核销人',
+      prop: 'createBy',
+      align: 'center'
+    }, {
+        label: '核销时间',
+        prop: 'createTime',
+        align: 'center'
+    },{
+      label: '档期',
+      prop: 'day',
+      align: 'center'
+    }, {
+      label: '影厅名',
+      prop: 'hallName',
+      align: 'center'
+    }, {
+      label: '电影名',
+      prop: 'movieName',
+      align: 'center'
+    }, {
+      label: '电影开始时间',
+      prop: 'startTime',
+      align: 'center'
+    }, ]
+  }
+  
