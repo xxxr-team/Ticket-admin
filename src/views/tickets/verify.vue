@@ -88,15 +88,15 @@ export default {
   },
   methods: {
     getList(params) {
-      //   this.tableLoading = true;
-      //   fetcVhList({
-      //     ...this.searchform,
-      //     ...this.params,
-      //   }).then((response) => {
-      //     this.tableData = response.data.data;
-      //     this.page.total = response.data.total;
-      //     this.tableLoading = false;
-      //   });
+      this.tableLoading = true;
+      fetcVhList({
+        ...this.searchform,
+        ...this.params,
+      }).then((response) => {
+        this.tableData = response.data.data;
+        this.page.total = response.data.total;
+        this.tableLoading = false;
+      });
     },
     async searchChange(params, done) {
       this.searchform = await params;

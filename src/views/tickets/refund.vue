@@ -31,18 +31,11 @@
         @current-change="currentChange"
         @refresh-change="refreshChange"
       >
-        <template slot-scope="scope" slot="menuLeft">
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            size="small"
-            @click="addVerify"
-            >核销票据</el-button
-          >
-        </template>
         <template slot-scope="scope" slot="menu">
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
-            >撤销</el-button
+          <el-button size="mini" type="danger" @click="agree(scope.row)"
+            >同意退款</el-button
+          ><el-button size="mini" type="danger" @click="refuse(scope.row)"
+            >拒绝退款</el-button
           >
         </template>
       </avue-crud>
@@ -52,7 +45,7 @@
 </template>
 
 <script>
-import { fetcVhList } from "@/api/tickets/verify";
+import { fetcRhList } from "@/api/tickets/refund";
 import { tableOption } from "@/const/crud/tickets/refund";
 import addVerify from "./components/addVerify.vue";
 
@@ -94,14 +87,14 @@ export default {
   methods: {
     getList(params) {
       //   this.tableLoading = true;
-      //   fetcVhList({
-      //     ...this.searchform,
-      //     ...this.params,
-      //   }).then((response) => {
-      //     this.tableData = response.data.data;
-      //     this.page.total = response.data.total;
-      //     this.tableLoading = false;
-      //   });
+      fetcRhList({
+        ...this.searchform,
+        ...this.params,
+      }).then((response) => {
+        this.tableData = response.data.data;
+        this.page.total = response.data.total;
+        this.tableLoading = false;
+      });
     },
     async searchChange(params, done) {
       this.searchform = await params;
@@ -109,19 +102,19 @@ export default {
       await done();
       // this.getList({ ...params, ...this.params });
     },
-    handleDelete(row) {
-      this.$confirm("此操作将撤销该订单, 是否继续?", "提示", {
+    agree(row) {
+      this.$confirm("此操作将同意该退款, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
         .then(() => {
-          deleteList({ id: row.id }).then((res) => {
+          agreeRefund({ id: row.id }).then((res) => {
             if (res.data.code == 200) {
               this.getList();
               this.$message({
                 type: "success",
-                message: "撤销成功!",
+                message: "审核成功!",
               });
             }
           });
@@ -133,6 +126,7 @@ export default {
           });
         });
     },
+    refuse(row) {},
     resetChange() {
       this.searchform = {};
       this.getList();

@@ -10,7 +10,7 @@ export function fetcVhList(params) {
 
 export function addVList(data) {
   return request({
-    url: `movie/admin/verify/verify`,
+    url: `movie/admin/verify/verifyCode`,
     method: 'post',
     data
   })

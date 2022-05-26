@@ -33,33 +33,53 @@
     delBtn: false,
     searchMenuSpan: 6,
     column: [{
-      label: '影院名',
-      prop: 'cinemaName',
+      label: '订单ID',
+      prop: 'orderId',
       align: 'center'
     }, {
-      label: '核销人',
-      prop: 'createBy',
+        label: '商家退款单号',
+        prop: 'refundNo',
+        align: 'center'
+    },  {
+        label: '退款类型',
+        prop: 'type',
+        align: 'center'
+      }, {
+      label: '退款金额',
+      prop: 'amount',
       align: 'center'
     }, {
-        label: '核销时间',
-        prop: 'createTime',
+      label: '手续费',
+      prop: 'fee',
+      align: 'center'
+    }, {
+        label: '申请用户id',
+        prop: 'applicant',
         align: 'center'
     },{
-      label: '档期',
-      prop: 'day',
-      align: 'center'
-    }, {
-      label: '影厅名',
-      prop: 'hallName',
-      align: 'center'
-    }, {
-      label: '电影名',
-      prop: 'movieName',
-      align: 'center'
-    }, {
-      label: '电影开始时间',
-      prop: 'startTime',
-      align: 'center'
-    }, ]
+        label: '微信退款编号',
+        prop: 'outRefundNo',
+        align: 'center'
+    },  {
+        label: '退款状态',
+        prop: 'status',
+        align: 'center'
+      }, {
+        label: '退款原因',
+        prop: 'reason',
+        align: 'center'
+    },  {
+        label: '退款时间',
+        prop: 'refundTime',
+        align: 'center'
+    },{
+        label: '审核人id',
+        prop: 'auditor',
+        align: 'center'
+      },{
+        label: '退款结果',
+        prop: 'result',
+        align: 'center'
+    },  ]
   }
   

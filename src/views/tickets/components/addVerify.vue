@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     async show(data) {
-      this.dialogTitle = "添加核销";
+      this.dialogTitle = "核销";
       await fetchCList({ pageSize: 100 }).then((res) => {
         this.cinemaList = res.data.data;
       });
@@ -93,7 +93,7 @@ export default {
             this.loading = false;
             this.$refs["form"].resetFields();
             this.form = this.$options.data().form;
-            this.dialogFormVisible = false;
+            // this.dialogFormVisible = false;
           });
         } else {
           console.log("error submit!!");
